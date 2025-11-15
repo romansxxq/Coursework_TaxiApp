@@ -1,0 +1,105 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Мої поїздки</h2>
+
+  <p>
+    <a class="btn btn-primary" href="/rides/new">Створити нове замовлення</a>
+  </p>
+
+  <% if (rides.length === 0) { %>
+    <p>Поїздок ще немає.</p>
+  <% } else { %>
+
+    <div class="status-legend">
+      <span class="status-badge status-new">new</span> нове
+      <span class="status-badge status-accepted">accepted</span> прийнято
+      <span class="status-badge status-onway">on_way</span> у дорозі
+      <span class="status-badge status-completed">completed</span> завершено
+      <span class="status-badge status-cancelled">cancelled</span> скасовано
+    </div>
+
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Звідки</th>
+            <th>Куди</th>
+            <th>Тариф</th>
+            <th>Водій / авто</th>
+            <th>Статус</th>
+            <th>Сума</th>
+            <th>Оцінка</th>
+            <th>Коментар</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rides.forEach(function(r) { %>
+            <tr>
+              <td><%= r.created_at %></td>
+              <td><%= r.pickup_address %></td>
+              <td><%= r.destination_address %></td>
+              <td><%= r.tariff_name || '-' %></td>
+            <!-- нова колонка -->
+                <td>
+                    <% if (r.driver_name) { %>
+                    <div><strong><%= r.driver_name %></strong></div>
+                    <% if (r.brand && r.model) { %>
+                        <div class="car-info">
+                        <%= r.brand %> <%= r.model %>
+                        <% if (r.plate_number) { %>
+                            (<%= r.plate_number %>)
+                        <% } %>
+                        </div>
+                    <% } %>
+                    <% } else { %>
+                    <span class="muted">Водій ще не призначений</span>
+                    <% } %>
+                </td>
+
+
+              <td>
+                <% 
+                  let statusClass = '';
+                  if (r.status === 'new') statusClass = 'status-new';
+                  else if (r.status === 'accepted') statusClass = 'status-accepted';
+                  else if (r.status === 'on_way') statusClass = 'status-onway';
+                  else if (r.status === 'completed') statusClass = 'status-completed';
+                  else if (r.status === 'cancelled') statusClass = 'status-cancelled';
+                %>
+                <span class="status-badge <%= statusClass %>">
+                  <%= r.status %>
+                </span>
+              </td>
+
+              <td><%= r.total_cost || '-' %></td>
+
+              <td>
+                <% if (r.status === 'completed' && !r.has_review) { %>
+                  <a class="btn-small" href="/rides/<%= r.id_ride %>/review">Оцінити</a>
+                <% } else if (r.status === 'completed' && r.has_review) { %>
+                  <%= r.rating %> / 5
+                <% } else { %>
+                  —
+                <% } %>
+              </td>
+
+              <td>
+                <% if (r.status === 'completed' && r.has_review && r.comment) { %>
+                  <%= r.comment %>
+                <% } else if (r.status === 'completed' && r.has_review) { %>
+                  (без коментаря)
+                <% } else { %>
+                  —
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

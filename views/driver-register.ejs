@@ -1,0 +1,59 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Реєстрація водія</h2>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/driver/register">
+    <label>
+      ПІБ
+      <input type="text" name="full_name" required>
+    </label>
+
+    <label>
+      Телефон
+      <input type="text" name="phone" required>
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" required>
+    </label>
+
+    <label>
+      Пароль
+      <input type="password" name="password" required>
+    </label>
+
+    <hr>
+
+    <h3>Інформація про автомобіль</h3>
+
+    <label>
+      Марка
+      <input type="text" name="brand" required>
+    </label>
+
+    <label>
+      Модель
+      <input type="text" name="model" required>
+    </label>
+
+    <label>
+      Державний номер
+      <input type="text" name="plate_number" required>
+    </label>
+
+    <label>
+      Рік випуску
+      <input type="number" name="year" min="1991" max="2100" required>
+    </label>
+
+    <button class="btn btn-primary" type="submit">Зареєструватися</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Нове замовлення</h2>
+
+  <form method="POST" action="/rides/new">
+    <label>Адреса подачі
+      <input name="pickup_address" required>
+    </label>
+
+    <label>Адреса призначення
+      <input name="destination_address" required>
+    </label>
+
+    <label>Тариф
+      <select name="tariff_id" required>
+        <option value="">Оберіть тариф</option>
+        <% tariffs.forEach(function(t) { %>
+          <option value="<%= t.id_tariff %>"><%= t.name %></option>
+        <% }); %>
+      </select>
+    </label>
+
+    <label>Відстань (км)
+      <input type="number" step="0.1" name="distance_km">
+    </label>
+
+    <label>Тривалість (хв)
+      <input type="number" name="duration_min">
+    </label>
+
+    <button class="btn" type="submit">Створити</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

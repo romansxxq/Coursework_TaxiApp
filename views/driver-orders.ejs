@@ -1,0 +1,87 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Замовлення для водія</h2>
+
+  <% if (orders.length === 0) { %>
+    <p>Наразі немає доступних замовлень.</p>
+  <% } else { %>
+
+    <div class="status-legend">
+      <span class="status-badge status-new">new</span> нове
+      <span class="status-badge status-accepted">accepted</span> прийнято
+      <span class="status-badge status-onway">on_way</span> у дорозі
+      <span class="status-badge status-completed">completed</span> завершено
+      <span class="status-badge status-cancelled">cancelled</span> скасовано
+    </div>
+
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Створено</th>
+            <th>Пасажир</th>
+            <th>Звідки</th>
+            <th>Куди</th>
+            <th>Тариф</th>
+            <th>Сума</th>
+            <th>Статус</th>
+            <th>Дії</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(function(o) { %>
+            <tr>
+              <td><%= o.created_at %></td>
+              <td><%= o.user_name || '-' %></td>
+              <td><%= o.pickup_address %></td>
+              <td><%= o.destination_address %></td>
+              <td><%= o.tariff_name || '-' %></td>
+              <td><%= o.total_cost || '-' %></td>
+
+              <td>
+                <% 
+                  let statusClass = '';
+                  if (o.status === 'new') statusClass = 'status-new';
+                  else if (o.status === 'accepted') statusClass = 'status-accepted';
+                  else if (o.status === 'on_way') statusClass = 'status-onway';
+                  else if (o.status === 'completed') statusClass = 'status-completed';
+                  else if (o.status === 'cancelled') statusClass = 'status-cancelled';
+                %>
+                <span class="status-badge <%= statusClass %>">
+                  <%= o.status %>
+                </span>
+              </td>
+
+              <td>
+                <% if (o.status === 'new') { %>
+                  <form method="POST" action="/driver/orders/<%= o.id_ride %>/accept">
+                    <button class="btn-small" type="submit">Прийняти</button>
+                  </form>
+                <% } %>
+
+                <% if (o.status === 'accepted') { %>
+                  <form method="POST" action="/driver/orders/<%= o.id_ride %>/on_way">
+                    <button class="btn-small" type="submit">У дорозі</button>
+                  </form>
+                <% } %>
+
+                <% if (o.status === 'on_way') { %>
+                  <form method="POST" action="/driver/orders/<%= o.id_ride %>/complete">
+                    <button class="btn-small" type="submit">Завершити</button>
+                  </form>
+                <% } %>
+
+                <% if (o.status === 'completed') { %>
+                  <span class="status-note">Поїздку завершено</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

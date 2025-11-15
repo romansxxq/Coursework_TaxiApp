@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Реєстрація пасажира</h2>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/register">
+    <label>ПІБ
+      <input name="full_name" required>
+    </label>
+
+    <label>Email
+      <input name="email" type="email" required>
+    </label>
+
+    <label>Телефон
+      <input name="phone" required>
+    </label>
+
+    <label>Пароль
+      <input name="password" type="password" required>
+    </label>
+
+    <button class="btn" type="submit">Зареєструватися</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

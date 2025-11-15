@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Відгуки пасажирів</h2>
+
+  <p><b>Водій:</b> <%= driver.full_name %></p>
+  <p><b>Середній рейтинг:</b> <%= driver.driver_rating %></p>
+
+  <% if (reviews.length === 0) { %>
+    <p>Ще немає жодного відгуку.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Дата відгуку</th>
+          <th>Пасажир</th>
+          <th>ID поїздки</th>
+          <th>Оцінка</th>
+          <th>Коментар</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% reviews.forEach(function(r) { %>
+          <tr>
+            <td><%= r.created_at %></td>
+            <td><%= r.user_name || '—' %></td>
+            <td><%= r.id_ride %></td>
+            <td><%= r.rating %> / 5</td>
+            <td><%= r.comment || '(без коментаря)' %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

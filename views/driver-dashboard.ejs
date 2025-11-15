@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Кабінет водія</h2>
+
+  <p><strong>ПІБ:</strong> <%= driver.full_name %></p>
+  <p><strong>Email:</strong> <%= driver.email %></p>
+  <p><strong>Телефон:</strong> <%= driver.phone %></p>
+  <p><strong>Статус:</strong> <%= driver.status %></p>
+  <p><strong>Рейтинг:</strong> <%= driver.driver_rating %></p>
+
+  <hr>
+
+  <h3>Моє авто</h3>
+
+  <% if (driver.brand) { %>
+    <p><strong>Марка:</strong> <%= driver.brand %></p>
+    <p><strong>Модель:</strong> <%= driver.model %></p>
+    <p><strong>Номер:</strong> <%= driver.plate_number %></p>
+    <p><strong>Рік випуску:</strong> <%= driver.year %></p>
+  <% } else { %>
+    <p>Інформація про автомобіль ще не вказана.</p>
+  <% } %>
+
+  <hr>
+
+  <p>
+    <a class="btn btn-primary" href="/driver/orders">Перейти до замовлень</a>
+  </p>
+</section>
+
+<%- include('partials/footer') %>

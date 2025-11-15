@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>TaxiApp — демо</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <!-- Верхня жовта смужка -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span class="brand">TaxiApp Demo</span>
+      <span class="topbar-item">24/7 сервіс</span>
+      <span class="topbar-item">+380 50 000 00 00</span>
+    </div>
+  </div>
+
+  <!-- Навігація -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <div class="logo">
+        <span class="logo-icon">🚕</span>
+        <span class="logo-text">Express Taxi</span>
+      </div>
+
+      <div class="nav-links">
+        <a href="/">Головна</a>
+
+        <% if (!currentUser && !currentDriver) { %>
+          <a href="/login">Вхід пасажира</a>
+          <a href="/register">Реєстрація пасажира</a>
+          <a href="/driver/login">Вхід водія</a>
+          <a href="/driver/register">Реєстрація водія</a>
+        <% } %>
+
+        <% if (currentUser) { %>
+          <a href="/profile">Профіль</a>
+          <a href="/rides">Мої поїздки</a>
+          <a href="/logout-user">Вийти</a>
+        <% } %>
+
+        <% if (currentDriver) { %>
+          <a href="/driver/dashboard">Кабінет водія</a>
+          <a href="/driver/orders">Замовлення</a>
+          <a href="/driver/logout">Вийти</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="main-container">
