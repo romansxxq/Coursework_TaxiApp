@@ -16,15 +16,5 @@
 - Rides (PK: ride_id, FK: user_id → Users.user_id, FK: driver_id → Drivers.driver_id, FK: tariff_id → Tariffs.tariff_id)
 - Reviews (PK: review_id, FK: ride_id → Rides.ride_id, FK: user_id → Users.user_id, FK: driver_id → Drivers.driver_id)
 
-## 3) ER-діаграма (Mermaid)
-> GitHub рендерить Mermaid прямо в Markdown.
+## 3) ER-діаграма
 
-```mermaid
-erDiagram
-  USERS ||--o{ RIDES : creates
-  DRIVERS ||--o{ RIDES : performs
-  TARIFFS ||--o{ RIDES : applies
-  DRIVERS ||--|| CARS : owns
-  USERS ||--o{ REVIEWS : writes
-  DRIVERS ||--o{ REVIEWS : receives
-  RIDES ||--o| REVIEWS : has
